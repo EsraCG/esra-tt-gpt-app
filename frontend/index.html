@@ -1,0 +1,43 @@
+project/frontend/index.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FAQ Assistant</title>
+    <style>
+        body { font-family: sans-serif; padding: 2rem; }
+        textarea, input { width: 100%; padding: 0.5rem; font-size: 1rem; }
+        button { margin-top: 1rem; padding: 0.75rem; font-size: 1rem; }
+        #response { margin-top: 2rem; padding: 1rem; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+    <h1>Ask Our AI Assistant</h1>
+    <textarea id="prompt" rows="4" placeholder="Ask me anything about Rabobank..."></textarea>
+    <button onclick="askQuestion()">Ask</button>
+
+    <div id="response"></div>
+
+    <script>
+        async function askQuestion() {
+            const prompt = document.getElementById('prompt').value;
+            const responseDiv = document.getElementById('response');
+            responseDiv.innerHTML = 'Thinking...';
+
+            try {
+                const response = await fetch('http://127.0.0.1:8000/ask', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt })
+                });
+
+                const data = await response.json();
+                responseDiv.innerHTML = `<strong>Answer:</strong><br>${data.response}`;
+            } catch (err) {
+                responseDiv.innerHTML = `<span style="color: red;">Error: ${err.message}</span>`;
+            }
+        }
+    </script>
+</body>
+</html>
