@@ -1,3 +1,4 @@
+from src.config import AZURE_OPENAI_KEY
 import os
 import httpx
 from dotenv import load_dotenv
@@ -8,7 +9,7 @@ API_KEY = os.getenv("AZURE_OPENAI_KEY")
 API_URL = "https://open-ai-resource-rob.openai.azure.com/openai/deployments/gpt-4o-mini/chat/completions?api-version=2024-08-01-preview"
 HEADERS = {
     "Content-Type": "application/json",
-    "api-key": API_KEY
+    "api-key": AZURE_OPENAI_KEY
 }
 
 
